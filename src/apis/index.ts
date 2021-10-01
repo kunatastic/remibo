@@ -23,7 +23,6 @@ router.get("/u/newEvent", async (req: Request, res: Response) => {
     discordId: req.cookies.discordId,
   });
   if (!userInfo) return null;
-
   const calender = createCalendarClient(OAuthConfig, userInfo.refresh_token);
   const events = await insertEventCalender(calender);
   res.json(events);
