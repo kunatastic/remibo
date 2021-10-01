@@ -1,0 +1,16 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+body {
+  background-color: aqua;
+  color: black;
+}
