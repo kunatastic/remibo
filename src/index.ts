@@ -3,7 +3,9 @@ console.log("Welcome to the Google Integrated Discord Bot");
 // ============x============== EXPRESS SERVER =============x=============
 
 // Environment variables declaration
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 import express, { Application } from "express";
 import cookieParser from "cookie-parser";
