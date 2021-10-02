@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "just another reminder bot but with google calender api for seemless integration with the windows and never miss a another work",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc -p .",
