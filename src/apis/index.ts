@@ -10,7 +10,8 @@ const router = express.Router();
 const OAuthConfig = createOAuthConfig();
 
 router.get("/", (req: Request, res: Response) => {
-  res.render("index.html");
+  // res.render("index.html");
+  res.json({ status: 200, msg: "AM I WORKING??" });
 });
 
 router.get("/u/:discordId", (req: Request, res: Response) => {
