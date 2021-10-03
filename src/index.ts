@@ -13,9 +13,16 @@ import morgan from "morgan";
 const app: Application = express();
 import { DBConnection, DBDisconnect } from "./utils/DB/DB.config";
 import path from "path";
+import mongoose from "mongoose";
 
 // DB connection
-DBConnection();
+mongoose.connect(
+  process.env.MONGO_URI || "mongodb://localhost:27017/remibo",
+  {},
+  () => {
+    console.log("DB connected");
+  }
+);
 
 // Middlewares
 app.use(express.json());

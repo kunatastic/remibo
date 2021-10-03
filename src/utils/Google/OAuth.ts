@@ -59,7 +59,7 @@ export async function deleteUserOAuth2Token(
   discordId: string
 ): Promise<Boolean> {
   const deletedUser = await TokenModel.findOneAndDelete({ discordId });
-  console.log(deletedUser);
+  // console.log(deletedUser);
 
   if (deletedUser) return true;
   return false;

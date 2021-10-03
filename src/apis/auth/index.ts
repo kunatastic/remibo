@@ -1,4 +1,6 @@
 import express, { Request, Response } from "express";
+import { TokenModel } from "../../models/TokenModel";
+import { userExists } from "../../utils/DB";
 import { createCalendarClient, getEvents } from "../../utils/Google/Calender";
 const router = express.Router();
 
@@ -7,7 +9,6 @@ import {
   getConnectionUrl,
   getUserInfo,
 } from "../../utils/Google/OAuth";
-import { TokenModel } from "../../models/TokenModel";
 
 const OAuthConfig = createOAuthConfig();
 
@@ -21,14 +22,14 @@ router.get("/init", async (req: Request, res: Response) => {
     const OAuthURL = getConnectionUrl(OAuthConfig);
 
     // check if DiscordId already exists in DB
-    const UserExists = await TokenModel.findOne({
-      discordId: req.cookies.discordId,
-    });
+    const UserExists = await userExists(req.cookies.discordId);
 
+    // console.log(UserExists);
     if (UserExists) {
       res.redirect("/p/alreadyVerified");
       return;
     }
+
     res.redirect(OAuthURL);
   } catch (err) {
     console.log(err);

@@ -3,8 +3,8 @@ import { Connection, connect, disconnect } from "mongoose";
 let database: Connection;
 
 export function DBConnection() {
-  const MONGODB_URI = "mongodb://localhost:27017/ReminderBotToken";
-  // process.env.MONGODB_URI || "mongodb://localhost:27017/ReminderBotToken";
+  const MONGODB_URI =
+    process.env.MONGODB_URI || "mongodb://localhost:27017/ReminderBotToken";
 
   // If database already connected, return
   if (database) return;

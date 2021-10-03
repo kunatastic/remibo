@@ -13,14 +13,15 @@ client.on("ready", () => {
 client.on("message", async (message: Message) => {
   if (message.author.bot) return;
   if (!message.guild) return;
-  if (!message.content.startsWith(process.env.PREFIX || "!google")) return;
+  if (!message.content.startsWith(process.env.DISCORD_BOT_PREFIX || "!google"))
+    return;
 
   const lowerCaseMessage: String = message.content.toLowerCase();
   const args: String[] = lowerCaseMessage.split(" ");
 
   // Command Architecture
   // prefix + instruction + value
-  console.log(args);
+  // console.log(args);
   checkCommands(args, message);
 });
 
