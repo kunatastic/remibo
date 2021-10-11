@@ -1,16 +1,113 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+h1 {
+  font-size: 4rem;
 }
-
-html {
-  font-size: 62.5%;
-  scroll-behavior: smooth;
-  font-family: Georgia, "Times New Roman", Times, serif;
+p {
+  font-size: 1.5rem;
 }
-
 body {
-  background-color: aqua;
-  color: black;
+  margin: 0;
+  font-family: "Prompt", sans-serif;
+  color: white;
+  background: #1d2636;
+  overflow-x: hidden;
+  height: 100vh;
+  overflow: hidden;
+}
+
+@font-face {
+  font-family: "product-sans";
+  src: url("/assets/Product Sans Regular.ttf");
+}
+
+.google {
+  font-family: "product-sans";
+}
+
+.gColor1 {
+  color: #5d7fbe;
+}
+.gColor2 {
+  color: #d7282a;
+}
+.gColor3 {
+  color: #f4c300;
+}
+.gColor4 {
+  color: #5d7fbe;
+}
+.gColor5 {
+  color: #45ac43;
+}
+.gColor6 {
+  color: #d7282a;
+  transform: rotate(70deg);
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+}
+
+.container {
+  margin: auto;
+  max-width: 1200px;
+  padding: 0 20px;
+  /* background-color: orange; */
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: olive; */
+}
+
+.image {
+  height: 50vw;
+}
+
+.logo {
+  width: 200px;
+  position: absolute;
+  left: 0;
+  top: -50px;
+}
+
+.highlight {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #000;
+}
+
+.high1 {
+  color: #ec615b;
+}
+.high2 {
+  color: #5222d0;
+}
+
+@media (max-width: 950px) {
+  .image {
+    height: 90vw;
+  }
+  .flex {
+    flex-direction: column;
+  }
+  h1 {
+    text-align: center;
+    font-size: 3rem;
+  }
+  .flex {
+    margin-top: 50px;
+  }
+  .logo {
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  .reverse {
+    flex-flow: column-reverse;
+  }
 }

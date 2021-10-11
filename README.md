@@ -4,9 +4,9 @@ Remibo is not just the next discord reminder bot clone. Rather Remibo is cute bo
 
 ## Todos
 
- - [ ] Calender Utilities and Commands
- - [ ] FrontEnd Design
- - [ ] Documentation
+- [ ] Calender Utilities and Commands
+- [ ] FrontEnd Design
+- [ ] Documentation
 
 ## Setting up a remibo
 
@@ -18,3 +18,8 @@ Refer the `.env.example`
 2. googleapis
 3. Discord.js
 4. express
+
+## Resources
+
+1. [Pixeltrue](https://www.pixeltrue.com) for there beautiful illustrations
+2. [FreeLogoDesign](https://www.freelogodesign.org/) for the beautiful logo

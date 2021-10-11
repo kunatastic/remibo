@@ -2,11 +2,11 @@ import express, { Request, Response } from "express";
 const router = express.Router();
 
 router.get("/alreadyVerified", (req: Request, res: Response) => {
-  res.send("Already Verified");
+  res.render("alreadyVerified.html");
 });
 
 router.get("/verified", (req: Request, res: Response) => {
-  res.send("Verified");
+  res.render("verified.html");
 });
 
 router.get("/", (req: Request, res: Response) => {
