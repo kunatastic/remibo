@@ -1,4 +1,4 @@
-import { TokenModel } from "../../models/TokenModel";
+import { TokenModel } from '../../models/TokenModel';
 
 // If a user exists, return the user
 export async function userExists(discordId: string) {

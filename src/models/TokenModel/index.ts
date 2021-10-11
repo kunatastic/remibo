@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 interface Token {
   // email: string;
@@ -11,7 +11,7 @@ interface Token {
 }
 
 const StringNull = {
-  type: String,
+  type: String
 };
 
 const TokenSchema = new Schema<Token>(
@@ -22,9 +22,9 @@ const TokenSchema = new Schema<Token>(
     expiry_date: Number,
     access_token: StringNull,
     token_type: StringNull,
-    id_token: StringNull,
+    id_token: StringNull
   },
   { timestamps: true }
 );
 
-export const TokenModel = model<Token>("Token", TokenSchema);
+export const TokenModel = model<Token>('Token', TokenSchema);
