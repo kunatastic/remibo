@@ -1,35 +1,32 @@
-import express, { Request, Response } from 'express';
-import { TokenModel } from '../../models/TokenModel';
-import { userExists } from '../../utils/DB';
-import { createCalendarClient, getEvents } from '../../utils/Google/Calender';
+import express, { Request, Response } from "express";
+import { TokenModel } from "../../models/TokenModel";
+import { userExists } from "../../utils/DB";
+import { createCalendarClient, getEvents } from "../../utils/Google/Calender";
 
 import {
   createOAuthConfig,
   getConnectionUrl,
-  getUserInfo
-} from '../../utils/Google/OAuth';
+  getUserInfo,
+} from "../../utils/Google/OAuth";
 const router = express.Router();
 
 const OAuthConfig = createOAuthConfig();
 
-router.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+router.get("/", (req: Request, res: Response) => {
+  res.send("Hello World!");
 });
 
 // Redirect to the Google consent page
-router.get('/init', async (req: Request, res: Response) => {
+router.get("/init", async (req: Request, res: Response) => {
   try {
-    const OAuthURL = getConnectionUrl(OAuthConfig);
-
     // check if DiscordId already exists in DB
     const UserExists = await userExists(req.cookies.discordId);
-
-    // console.log(UserExists);
     if (UserExists) {
-      res.redirect('/p/alreadyVerified');
+      res.redirect("/p/alreadyVerified");
       return;
     }
 
+    const OAuthURL = getConnectionUrl(OAuthConfig);
     res.redirect(OAuthURL);
   } catch (err) {
     console.log(err);
@@ -38,8 +35,14 @@ router.get('/init', async (req: Request, res: Response) => {
 });
 
 // Get the access token from the Google consent page
-router.get('/google', async (req: Request, res: Response) => {
+router.get("/google", async (req: Request, res: Response) => {
   try {
+    // if user didn't authorize the app, redirect to the error page
+    if ("error" in req.query) {
+      res.redirect("/p/permission");
+      return;
+    }
+
     // Get the code from the quert string
     const code: any = req.query.code;
 
@@ -54,16 +57,17 @@ router.get('/google', async (req: Request, res: Response) => {
         refresh_token: tokens.refresh_token,
         token_type: tokens.token_type,
         expiry_date: tokens.expiry_date,
-        id_token: tokens.id_token
+        id_token: tokens.id_token,
       });
 
       const tokenData = await storedTokens.save();
       console.log(tokenData);
     } catch (err) {
       console.log(err);
+      res.sendStatus(500);
     }
 
-    res.redirect('/p/verified');
+    res.redirect("/p/verified");
     // const calender = createCalendarClient(OAuthConfig, tokens.access_token);
 
     // const events = await getEvents(calender);

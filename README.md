@@ -7,6 +7,8 @@ Remibo is not just the next discord reminder bot clone. Rather Remibo is cute bo
 - [ ] Calender Utilities and Commands
 - [x] FrontEnd Design
 - [ ] Documentation
+- [ ] Its all right no hard feelings - Delete Page
+- [x] Its an error cause you didnot gave us permission ;(
 
 ## Setting up a remibo
 
