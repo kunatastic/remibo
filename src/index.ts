@@ -29,7 +29,7 @@ app.use("/u", require("./apis/users"));
 
 // DB connection
 mongoose
-  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/remibo", {})
+  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/remibo", {})
   .then(() => {
     console.log("DB connected");
 
