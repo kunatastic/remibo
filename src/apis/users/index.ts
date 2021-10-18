@@ -9,11 +9,6 @@ import { createOAuthConfig } from "../../utils/Google/OAuth";
 const router = express.Router();
 const OAuthConfig = createOAuthConfig();
 
-router.get("/:discordId", (req: Request, res: Response) => {
-  res.cookie("discordId", req.params.discordId);
-  res.redirect("/a/init");
-});
-
 router.get("/newEvent", async (req: Request, res: Response) => {
   const userInfo = await TokenModel.findOne({
     discordId: req.cookies.discordId,

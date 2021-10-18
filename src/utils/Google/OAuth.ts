@@ -1,13 +1,11 @@
-import { google } from 'googleapis';
-import { OAuth2Client } from 'google-auth-library';
-import { TokenModel } from '../../models/TokenModel';
+import { google } from "googleapis";
+import { OAuth2Client } from "google-auth-library";
+import { TokenModel } from "../../models/TokenModel";
 
 // Default calender scopes
 const defaultScopes = [
-  'https://www.googleapis.com/auth/calendar',
-  'https://www.googleapis.com/auth/calendar.events',
-  'https://www.googleapis.com/auth/userinfo.profile',
-  'https://www.googleapis.com/auth/userinfo.email'
+  "https://www.googleapis.com/auth/calendar",
+  "https://www.googleapis.com/auth/calendar.events",
 ];
 
 // create google oauth config
@@ -22,9 +20,9 @@ export function createOAuthConfig() {
 // get connection url
 export const getConnectionUrl = (oauth2Client: OAuth2Client) => {
   return oauth2Client.generateAuthUrl({
-    access_type: 'offline',
-    prompt: 'consent',
-    scope: defaultScopes
+    access_type: "offline",
+    prompt: "consent",
+    scope: defaultScopes,
   });
 };
 
@@ -35,8 +33,8 @@ export async function getUserInfo(
 ) {
   oauth2Client.setCredentials({ access_token });
   const oauth2 = google.oauth2({
-    version: 'v2',
-    auth: oauth2Client
+    version: "v2",
+    auth: oauth2Client,
   });
   const userInfo = await oauth2.userinfo.get();
   return userInfo;
