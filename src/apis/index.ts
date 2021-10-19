@@ -10,6 +10,12 @@ router.get("/", (req: Request, res: Response) => {
   res.render("welcome.html");
 });
 
+router.get("/invite", (req: Request, res: Response) => {
+  res.redirect(
+    "https://discord.com/api/oauth2/authorize?client_id=899886801613889576&permissions=149568&scope=bot"
+  );
+});
+
 console.log(
   `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&redirect_uri=${process.env.DISCORD_REDIRECT_URL}&response_type=code&scope=identify`
 );
