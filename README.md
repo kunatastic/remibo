@@ -1,14 +1,13 @@
 # Remibo
 
+[Invite](https://discord.com/api/oauth2/authorize?client_id=899886801613889576&permissions=149568&scope=bot) remibo to your server.
+
 Remibo is not just the next discord reminder bot clone. Rather Remibo is cute bot that use the Google-Oauth credentials and store the reminder straight into your google calender.
 
 ## Todos
 
 - [ ] Calender Utilities and Commands
-- [x] FrontEnd Design
 - [ ] Documentation
-- [ ] Its all right no hard feelings - Delete Page
-- [x] Its an error cause you didnot gave us permission ;(
 
 ## Setting up a remibo
 

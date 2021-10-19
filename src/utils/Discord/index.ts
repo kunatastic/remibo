@@ -7,13 +7,10 @@ const client = new Client();
 // Client on ready
 client.on("ready", () => {
   console.log(`Logged in as ${client.user?.tag}!`);
-  client.user?.setPresence({
-    status: "online",
-    activity: {
-      name: "!remibo",
-      type: "PLAYING",
-      url: `${process.env.ROOT_URL}`,
-    },
+  // client.user?.setPresence({ game: { name: 'with discord.js' }, status: 'idle' });
+  // Set the client user's presence
+  client.user?.setActivity(`${process.env.DISCORD_BOT_PREFIX} - Remibo help`, {
+    type: "PLAYING",
   });
 });
 
