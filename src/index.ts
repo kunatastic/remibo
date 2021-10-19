@@ -40,10 +40,10 @@ mongoose
     });
 
     // ============x============== DISCORD BOT =============x=============
-
-    // Initialize Discord Bot
     const DiscordClient = require("./utils/Discord");
-
-    // login to the discord client
     DiscordClient.login(process.env.DISCORD_TOKEN);
+  })
+  .catch((err) => {
+    console.log(err);
+    console.error("Sorry I'm having a very bad day...");
   });

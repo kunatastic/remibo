@@ -13,6 +13,27 @@ Remibo is not just the next discord reminder bot clone. Rather Remibo is cute bo
 
 Refer the `.env.example`
 
+## Code tree
+
+    ├───src
+    ├───apis
+    │   ├───auth
+    │   ├───pages
+    │   └───users
+    ├───models
+    │   └───TokenModel
+    ├───public
+    │   ├───assets
+    │   │   └───favicon
+    │   └───css
+    ├───typings
+    ├───utils
+    │   ├───DB
+    │   ├───Discord
+    │   │   └───Commands
+    │   └───Google
+    └───views
+
 ## Tech used
 
 1. Node.js

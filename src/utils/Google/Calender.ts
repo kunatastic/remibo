@@ -1,5 +1,5 @@
-import { calendar_v3, google } from 'googleapis';
-import { OAuth2Client } from 'google-auth-library';
+import { calendar_v3, google } from "googleapis";
+import { OAuth2Client } from "google-auth-library";
 
 // Create a calendar google api client
 export function createCalendarClient(
@@ -7,25 +7,23 @@ export function createCalendarClient(
   refreshToken: string | null | undefined
 ): calendar_v3.Calendar {
   OAuth2Client.setCredentials({
-    refresh_token: refreshToken
+    refresh_token: refreshToken,
   });
-
   const calendar = google.calendar({
-    version: 'v3',
-    auth: OAuth2Client
+    version: "v3",
+    auth: OAuth2Client,
   });
-
   return calendar;
 }
 
 // Get all the events from the calender
 export async function getEvents(calendar: calendar_v3.Calendar) {
   const events = await calendar.events.list({
-    calendarId: 'primary',
+    calendarId: "primary",
     timeMin: new Date().toISOString(),
     maxResults: 10,
     singleEvents: true,
-    orderBy: 'startTime'
+    orderBy: "startTime",
   });
   console.log(events.data.items);
   return events.data.items;
@@ -40,24 +38,24 @@ eventEndTime.setDate(eventEndTime.getDate() + 1);
 eventEndTime.setMinutes(eventEndTime.getMinutes() + 45);
 
 const event = {
-  summary: 'message',
-  description: 'ADDED by google bot',
+  summary: "message",
+  description: "ADDED by google bot",
   start: {
     dateTime: eventStartTime.toISOString(),
-    timeZone: 'Asia/Kolkata'
+    timeZone: "Asia/Kolkata",
   },
   end: {
     dateTime: eventEndTime.toISOString(),
-    timeZone: 'Asia/Kolkata'
+    timeZone: "Asia/Kolkata",
   },
   reminders: {
     useDefault: false,
     overrides: [
-      { method: 'email', minutes: 2 * 24 * 60 },
-      { method: 'popup', minutes: 60 }
-    ]
+      { method: "email", minutes: 2 * 24 * 60 },
+      { method: "popup", minutes: 60 },
+    ],
   },
-  colorId: '2'
+  colorId: "2",
 };
 
 // insertEvent(initalSetup(), event);
@@ -92,53 +90,53 @@ async function insertEvent(
   }
 ) {
   const { summary, description, location, start, end } = event;
-
   const eventData = {
     summary,
     description,
     location,
     start: {
-      dateTime: start
+      dateTime: start,
     },
     end: {
-      dateTime: end
-    }
+      dateTime: end,
+    },
   };
-
   const res = await calendar.events.insert({
     calendarId: process.env.CALENDAR_ID,
-    resource: eventData
+    resource: eventData,
   });
-
   return res.data;
 }
 
 // insert a new event to the calender
-export async function insertEventCalender(calender: calendar_v3.Calendar) {
-  const eventData = {
-    summary: 'message',
-    description: 'ADDED by google bot',
-    start: {
-      dateTime: eventStartTime.toISOString(),
-      timeZone: 'Asia/Kolkata'
-    },
-    end: {
-      dateTime: eventEndTime.toISOString(),
-      timeZone: 'Asia/Kolkata'
-    },
-    reminders: {
-      useDefault: false,
-      overrides: [
-        { method: 'email', minutes: 2 * 24 * 60 },
-        { method: 'popup', minutes: 60 }
-      ]
-    },
-    colorId: '2'
-  };
+export async function insertEventCalender(
+  calender: calendar_v3.Calendar,
+  eventData: calendar_v3.Schema$Event | undefined
+) {
+  // const eventData = {
+  //   summary: 'message',
+  //   description: 'Added by remibo',
+  //   start: {
+  //     dateTime: eventStartTime.toISOString(),
+  //     timeZone: 'Asia/Kolkata'
+  //   },
+  //   end: {
+  //     dateTime: eventEndTime.toISOString(),
+  //     timeZone: 'Asia/Kolkata'
+  //   },
+  //   reminders: {
+  //     useDefault: false,
+  //     overrides: [
+  //       { method: 'email', minutes: 2 * 24 * 60 },
+  //       { method: 'popup', minutes: 60 }
+  //     ]
+  //   },
+  //   colorId: '2'
+  // };
 
   const res = await calender.events.insert({
-    calendarId: 'primary',
-    requestBody: eventData
+    calendarId: "primary",
+    requestBody: eventData,
   });
 
   return res.data;

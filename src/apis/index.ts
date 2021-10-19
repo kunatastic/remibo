@@ -16,9 +16,6 @@ router.get("/invite", (req: Request, res: Response) => {
   );
 });
 
-console.log(
-  `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&redirect_uri=${process.env.DISCORD_REDIRECT_URL}&response_type=code&scope=identify`
-);
 router.get("/login", (req: Request, res: Response) => {
   res.redirect(
     `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&redirect_uri=${process.env.DISCORD_REDIRECT_URL}&response_type=code&scope=identify`
@@ -36,11 +33,11 @@ router.get("/fb/discord", async (req: Request, res: Response) => {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        client_id: process.env.DISCORD_CLIENT_ID || "error",
-        client_secret: process.env.DISCORD_CLIENT_SECRET || "error",
+        client_id: process.env.DISCORD_CLIENT_ID || "",
+        client_secret: process.env.DISCORD_CLIENT_SECRET || "",
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: process.env.DISCORD_REDIRECT_URI || "error",
+        redirect_uri: process.env.DISCORD_REDIRECT_URL || "",
         scope: "identify",
       }),
     });
@@ -70,16 +67,9 @@ router.get("/fb/google", async (req: Request, res: Response) => {
     const { tokens } = await OAuthConfig.getToken(code);
     const { discordId } = req.cookies;
     try {
-      const storedTokens = new TokenModel({
-        discordId,
-        access_token: tokens.access_token,
-        refresh_token: tokens.refresh_token,
-        token_type: tokens.token_type,
-        expiry_date: tokens.expiry_date,
-        id_token: tokens.id_token,
-      });
-      const tokenData = await storedTokens.save();
-      console.log(tokenData);
+      tokens["discordId"] = discordId;
+      const storedTokens = new TokenModel(tokens);
+      await storedTokens.save();
     } catch (err) {
       console.log(err);
       res.sendStatus(500);

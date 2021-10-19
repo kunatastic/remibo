@@ -1,6 +1,13 @@
 import { Message } from "discord.js";
+import { calendar_v3 } from "googleapis";
 import { userExists } from "../../DB";
-import { deleteUserOAuth2Token } from "../../Google/OAuth";
+import {
+  createCalendarClient,
+  insertEventCalender,
+} from "../../Google/Calender";
+import { createOAuthConfig, deleteUserOAuth2Token } from "../../Google/OAuth";
+
+const OAuthConfig = createOAuthConfig();
 
 export async function checkCommands(args: String[], message: Message) {
   // console.log("New message", args);
@@ -19,6 +26,7 @@ export async function checkCommands(args: String[], message: Message) {
   else if (args[1] == "verify") {
     message.reply(`Verify command ${process.env.ROOT_URL}/login`);
   }
+
   // TODO: Set a new reminder for the user
   else if (args[1] == "reminder" || args[1] == "rem") {
     if (args.length == 2) {
@@ -29,7 +37,9 @@ export async function checkCommands(args: String[], message: Message) {
     // TODO: Check if the user is registered
     const userRegistered = await userExists(message.author.id);
     if (!userRegistered) {
-      message.reply("Please register first use command `!google verify`");
+      message.reply(
+        `Please register first use command \`${process.env.DISCORD_BOT_PREFIX} verify\``
+      );
       return;
     }
 
@@ -41,9 +51,29 @@ export async function checkCommands(args: String[], message: Message) {
         );
         return;
       }
+      // console.log(message.content.toLowerCase());
+      console.log(userRegistered.access_token);
+      const calender = createCalendarClient(
+        OAuthConfig,
+        userRegistered.refresh_token
+      );
 
-      console.log(args);
+      const eventData: calendar_v3.Schema$Event = {
+        summary: "New Event",
+        colorId: "1",
+        description: "Added by remibo",
+        start: {
+          dateTime: new Date().toISOString(),
+        },
+      };
+
+      const events = await insertEventCalender(calender, eventData);
+      message.reply(JSON.stringify(events));
+
+      // const events = await getEvents(calender);
+      // res.json(events);
     }
+
     // TODO: Set a date specific reminder
     else if (args[2] == "date" || args[2] == "d" || args[2] == "on") {
       console.log(
@@ -53,15 +83,18 @@ export async function checkCommands(args: String[], message: Message) {
           Date.now().toString()
       );
     }
+
     // TODO: Fallback command
     else {
       message.reply("Invalid Command");
     }
   }
+
   // TODO: Send the help command
   else if (args[1] == "help" || args[1] == "h") {
     message.reply("Help");
   }
+
   // TODO: Delte the user's OAuth2 token
   else if (args[1] == "delete" || args[1] == "del") {
     const deleteStatus = await deleteUserOAuth2Token(message.author.id);
@@ -71,8 +104,30 @@ export async function checkCommands(args: String[], message: Message) {
       message.reply("We could not deleted your profile...");
     }
   }
+
   // TODO: Fallback response
   else {
     message.reply("Command not found");
   }
+}
+
+// Convert the string to a date using regex
+function convertStringToDate(dateString: string) {
+  const dateRegex = /^\d{2}-\d{2}-\d{4}$/;
+  if (dateRegex.test(dateString)) {
+    return new Date(dateString);
+  }
+  return new Date();
+}
+
+// test convertStringToDate
+console.log(convertStringToDate("01-01-2020"));
+
+// Convert the string to datetime using regex
+function convertStringToDateTime(dateTimeString: string) {
+  const dateTimeRegex = /^\d{2}-\d{2}-\d{4} \d{2}:\d{2}$/;
+  if (dateTimeRegex.test(dateTimeString)) {
+    return new Date(dateTimeString);
+  }
+  return new Date();
 }

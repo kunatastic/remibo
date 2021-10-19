@@ -10,12 +10,11 @@ const router = express.Router();
 const OAuthConfig = createOAuthConfig();
 
 router.get("/newEvent", async (req: Request, res: Response) => {
-  const userInfo = await TokenModel.findOne({
-    discordId: req.cookies.discordId,
-  });
+  const { discordId } = req.cookies;
+  const userInfo = await TokenModel.findOne({ discordId });
   if (!userInfo) return null;
   const calender = createCalendarClient(OAuthConfig, userInfo.refresh_token);
-  const events = await insertEventCalender(calender);
+  const events = await insertEventCalender(calender, undefined);
   res.json(events);
 });
 module.exports = router;
